@@ -1,0 +1,248 @@
+﻿@model BDdoc.Models.DocList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section Styles {
+
+    <style>
+        ul#DetailsSocialFixer.list-inline > li {
+            padding-right: 3px;
+            padding-left: 3px;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Ratio 16:9 ( 100%/16*9 = 56.25% ) */
+        }
+
+            .iframe-container > * {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+            }
+
+        #affixApp.affix {
+            bottom: 50px;
+            right: 0px;
+        }
+    </style>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Details</h3>
+            <hr style="border-top: 3px solid #ee6e73;" />
+            <article class="search-result">
+
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                    <a href="#" class="thumbnail"><img src="~/Content/images/medicine.gif" alt=""></a>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-4 excerpet">
+                    <h6>@Html.DisplayFor(model => model.doctor.Name)</h6>
+
+                    <p class="">@*<b>Speciality: </b>*@@Html.DisplayFor(model => model.doctor.Speciality), @Html.DisplayFor(model => model.doctor.hospital_ID)</p>
+                    @*<p class=""><b>Current Chamber: </b>@Html.DisplayFor(model => model.doctor.hospital_ID)</p>*@
+
+                    <p class=""><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i> <span> @Html.DisplayFor(model => model.likes)%</span></p>
+
+                    <p class="" style="color: #00c700;"><i class="fa fa-check-circle fa-lg" aria-hidden="true"></i><span> Medical Registration Verified</span></p>
+
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                    <ul class="meta-search">
+                        <li class="">
+                            <a href="@Url.Action("Feedback", new { id = Model.doctor.ID })" class="btn-small waves-effect waves-light btn"><i class="fa fa-comments-o" aria-hidden="true"></i> Give Feedback</a>
+                        </li>
+                        <li>
+                            &nbsp;
+                        </li>
+                        <li class="">
+                            <a href="@Url.Action("Book", new { id = Model.doctor.ID })" class="btn-small waves-effect waves-light btn"><i class="fa fa-plus" aria-hidden="true"></i> Make Appointment</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <span class="clearfix borda"></span>
+            </article>
+            <hr style="border-top: 3px solid #ee6e73;" />
+            <ul class="nav nav-tabs">
+                <li class="nav active"><a href="#A" data-toggle="tab">Info</a></li>
+                <li class="nav"><a href="#B" data-toggle="tab">Feedback</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="A">
+                    <article class="search-result">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h6><i class="fa fa-graduation-cap fa-lg" aria-hidden="true"></i>&nbsp;<span>Education</span></h6>
+                            <p>18/F West 1205, 14A Chandrashila-Suvastu Tower 69/1 Bir Uttam Qazi Nuruzzaman Road Panthapath, Dhaka, Bangladesh</p>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                    <article class="search-result">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h6><i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>&nbsp;<span>Experience</span></h6>
+                            <p>18/F West 1205, 14A Chandrashila-Suvastu Tower 69/1 Bir Uttam Qazi Nuruzzaman Road Panthapath, Dhaka, Bangladesh</p>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                    <hr />
+                    <article class="search-result">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @*<h5><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;<span>@Html.DisplayFor(model => model.Location)</span></h5>*@
+                                <h5><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;<span>Location</span></h5>
+                                <p>18/F West 1205, 14A Chandrashila-Suvastu Tower 69/1 Bir Uttam Qazi Nuruzzaman Road Panthapath, Dhaka, Bangladesh</p>
+                                <div class="iframe-container">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.28756833775!2d90.27937101057701!3d23.780628607924317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka%2C+Bangladesh!5e0!3m2!1sen!2s!4v1484840136068" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <h6><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<span>Appointment Time</span></h6>
+                                <p>@Html.DisplayFor(model => model.doctor.AppTime)</p>
+
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <h6><i class="fa fa-money fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;<span>Fee</span></h6>
+                                <p>TK @Html.DisplayFor(model => model.doctor.Fee)</p>
+                            </div>
+                            <span class="clearfix borda"></span>
+                        </div>
+                    </article>
+
+
+                </div>
+                <div class="tab-pane fade" id="B">
+                    <ul class="collection">
+                        @foreach (var item in Model.feeds)
+                        {
+                            <li class="collection-item avatar">
+                                <img src="~/Content/images/usr.jpg" alt="" class="circle">
+                                <span class="title">@Html.DisplayFor(modelItem => item.patient_Name)</span>
+                                <span style="width: 100%;display: block;font-size: 10px;color: #4a4a4a;">
+                                    <a style="text-decoration: underline;">9 hours ago</a>
+                                </span>
+                                <p class="grey-text">
+                                    @Html.DisplayFor(modelItem => item.comment)
+                                </p>
+                                @if (Int32.Parse(item.Popularity+"") == 0)
+                                {
+                                    <div class="secondary-content red-text text-darken-1"><i class="glyphicon glyphicon-thumbs-up fa-rotate-180" aria-hidden="true" style="padding-bottom: 4px;"></i> <span>disliked</span> </div>
+                                }
+                                else
+                                {
+                                    <div class="secondary-content"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> <span>liked</span> </div>
+                                }
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-top: 3px solid #ee6e73;" />
+            <div>
+                <a href="@Url.Action("Index")" class="btn-small waves-effect waves-light btn"><i class="fa fa-arrow-left fa-lg" style="line-height: 0px;" aria-hidden="true"></i>&nbsp;Back to List</a>
+
+            </div>
+        </div>
+        <div class="col-md-2" style="position:absolute;top: 50px;right: 0px;">
+            <hr />
+            <div id="affixApp" data-spy="affix" data-offset-top="200">
+                @*<div class="col-sm-12 text-center" style="border: 2px solid aquamarine;">
+                        <img class="img-responsive" src="~/Content/images/Ad.png">
+                    </div>*@
+                Android: <a href="#">
+                    <img class="img-responsive" src="~/Content/images/google-play-badge.png">
+                </a>
+                IOS: <a href="#">
+                    <img class="img-responsive" src="~/Content/images/play-store-icons.png">
+                </a>
+                <hr />
+
+
+                <ul id="DetailsSocialFixer" class="list-inline">
+                    <li><a class="" href="#!"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a></li>
+                    <li><a class="" href="#!"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a></li>
+                    <li><a class="" href="#!"><i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        @*<div>
+                <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+                <a asp-action="Index">Back to List</a>
+            </div>*@
+
+
+    </div>
+</div>
+
+
+<!---------------------------------------------------------------------------------------------------------->
+@*<h2>Details</h2>
+
+    <div>
+        <h4>Doctor</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Speciality)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Speciality)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AppTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AppTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Fee)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fee)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

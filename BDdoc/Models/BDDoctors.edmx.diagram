@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a737538a5ead41d49d445ee76413def4" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Doctor" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Feedback" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Hospital" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Feedback_Doctor" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.C__EFMigrationsHistory" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.AspNetRoleClaim" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="7.875" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.25" />
+        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="Model.AspNetUserToken" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Model.Medicine" Width="1.5" PointX="10" PointY="1" />
+        <EntityTypeShape EntityType="Model.Order" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="Model.Sample" Width="1.5" PointX="9.75" PointY="4.75" />
+        <AssociationConnector Association="Model.FK_AspNetRoleClaims_AspNetRoles_RoleId" />
+        <AssociationConnector Association="Model.FK_AspNetUserClaims_AspNetUsers_UserId" />
+        <AssociationConnector Association="Model.FK_AspNetUserLogins_AspNetUsers_UserId" />
+        <AssociationConnector Association="Model.FK_Medicine_Order" />
+        <AssociationConnector Association="Model.AspNetUserRoles" />
+        <EntityTypeShape EntityType="Model.sysdiagram" PointX="5.375" PointY="10.75" Width="1.5" />
+        <EntityTypeShape EntityType="Model.Appointment" Width="1.5" PointX="5.25" PointY="14.125" />
+        <EntityTypeShape EntityType="Model.Education" Width="1.5" PointX="5.25" PointY="17.375" />
+        <AssociationConnector Association="Model.FK_Appointment_Doctor" />
+        <AssociationConnector Association="Model.FK_Education_Doctor" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

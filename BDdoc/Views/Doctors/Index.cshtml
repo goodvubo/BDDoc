@@ -1,0 +1,382 @@
+﻿@model PagedList.IPagedList<BDdoc.Models.Doctor>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Doctors";
+}
+
+@section Styles {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/nouislider.css" rel="stylesheet" type="text/css" />
+    <style>
+        .noUi-target .range-label {
+            background-color: #3b99d9;
+        }
+
+        .noUi-connect {
+            background-color: #76c8ff;
+        }
+
+        [type="checkbox"]:checked + label:before {
+            border-right: 2px solid #3b99d9 !important;
+            border-bottom: 2px solid #3b99d9 !important;
+        }
+
+        .form-group > label {
+            color: #ee6e73;
+        }
+
+        #affixFilter.affix {
+            padding: 15px;
+            background-color: #efefef;
+            top: 57px;
+            left: 15px;
+            width: 16.2%;
+        }
+
+        #affixApp.affix {
+            bottom: 50px;
+            right: 0px;
+        }
+
+    </style>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" style="background-color: #efefef;">
+
+
+            <div id="affixFilter" data-spy="affix" data-offset-top="3">
+                <button id="hidd" class="" style="width: 100%; background-color: #2ab7a9; color: white;">&#9650;&nbsp;hide filters&nbsp;&#9650;</button>
+                @using (Html.BeginForm("Index", "Doctors", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "", @id = "forHid" }))
+                {
+
+                    <div class="row">
+
+                        @*<div class="input-field col s12 ">
+                                Genres:<select asp-for="movieGenre" asp-items="Model.genres">
+                                        <option value="" selected>All&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9660;</option>
+                                    </select>
+
+                            </div*@
+
+                        <div class="form-group col s12 ">
+                            <label><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Name:</label>
+                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @type = "text" })
+                            <input class="btn btn-block" type="submit" value="Filter" />
+                        </div>
+                        <div class="form-group col s12 ">
+                            <label><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Consultation Fee:</label>
+                            <br /><br />
+                            <div id="fee-range">
+                            </div>
+                            <br />
+                            <input id="input0" readonly>
+                            <label>to</label>
+                            <input id="input1" readonly>
+                        </div>
+                        <div class="form-group col s12 ">
+                            <label><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Availability:</label>
+                            <ul id="appDays" class="list-inline">
+                                <li>
+                                    <input type="checkbox" class="avblz" id="sun" checked="checked" />
+                                    <label class="weekDay" for="sun">Sun</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="mon" checked="checked" />
+                                    <label class="weekDay" for="mon">Mon</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="tue" checked="checked" />
+                                    <label class="weekDay" for="tue">Tue</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="wed" checked="checked" />
+                                    <label class="weekDay" for="wed">Wed</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="thu" checked="checked" />
+                                    <label class="weekDay" for="thu">Thu</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="fri" checked="checked" />
+                                    <label class="weekDay" for="fri">Fri</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" class="avblz" id="sat" checked="checked" />
+                                    <label class="weekDay" for="sat">Sat</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col s12 ">
+
+                    </div>
+
+                    @section scripts {
+
+
+                        <script type="text/javascript">
+                            $(function () {
+
+
+
+                                function fild() {
+                                    $(".eachDoc").each(function (index, Element) {
+                                        var sun = false;
+                                        var mon = false;
+                                        var tue = false;
+                                        var wed = false;
+                                        var thu = false;
+                                        var fri = false;
+                                        var sat = false;
+                                        if (($("#sun").is(':checked'))) {
+                                            if ($(this).find(".sun").length) {
+                                                sun = true;
+                                            }
+                                        }
+                                        if (($("#mon").is(':checked'))) {
+                                            if ($(this).find(".mon").length) {
+                                                mon = true;
+                                            }
+                                        }
+                                        if (($("#tue").is(':checked'))) {
+                                            if ($(this).find(".tue").length) {
+                                                tue = true;
+                                            }
+                                        }
+                                        if (($("#wed").is(':checked'))) {
+                                            if ($(this).find(".wed").length) {
+                                                wed = true;
+                                            }
+                                        }
+                                        if (($("#thu").is(':checked'))) {
+                                            if ($(this).find(".thu").length) {
+                                                thu = true;
+                                            }
+                                        }
+                                        if (($("#fri").is(':checked'))) {
+                                            if ($(this).find(".fri").length) {
+                                                fri = true;
+                                            }
+                                        }
+                                        if (($("#sat").is(':checked'))) {
+                                            if ($(this).find(".sat").length) {
+                                                sat = true;
+                                            }
+                                        }
+                                        if (sun || mon || tue || wed || thu || fri || sat) {
+                                            $(this).show(1000);
+                                        } else {
+                                            $(this).hide(1000);
+                                        }
+                                    });
+                                }
+
+                                $(".avblz").click(function () {
+                                    fild();
+                                });
+
+                                function filz(i0, i1) {
+                                    $(".eachDoc").each(function (index, Element) {
+                                        var numb = parseInt($(this).find(".TAKKA").text(), 10);
+                                        if (numb < i0 || numb > i1) {
+                                            $(this).hide(1000);
+                                        } else {
+                                            $(this).show(1000);
+                                        }
+                                    });
+                                }
+
+                                $("#hidd").click(function () {
+                                    $("#forHid").slideToggle();
+                                    if ($("#hidd").text() === "▲ hide filters ▲") {
+                                        $("#hidd").text("▼ show filters ▼");
+                                    } else {
+                                        $("#hidd").text("▲ hide filters ▲");
+                                    }
+                                });
+
+                                var feeSlider = document.getElementById('fee-range');
+
+                                noUiSlider.create(feeSlider, {
+                                    start: [0, 5000],
+                                    connect: true,
+                                    step: 1,
+                                    range: {
+                                        'min': 0,
+                                        'max': 5000
+                                    },
+                                    format: wNumb({
+                                        decimals: 0
+                                    })
+                                });
+
+                                var input0 = document.getElementById('input0');
+                                var input1 = document.getElementById('input1');
+
+                                var faultz0 = 0;
+                                var faultz1 = 5000;
+
+                                feeSlider.noUiSlider.on('update', function (values, handle) {
+
+                                    var value = values[handle];
+
+                                    if (handle) {
+                                        faultz1 = Math.round(value);
+                                        input1.value = faultz1 + " Tk";
+                                    } else {
+                                        faultz0 = Math.round(value);
+                                        input0.value = faultz0 + " Tk";
+                                    }
+                                    filz(faultz0, faultz1);
+
+                                });
+
+                                input0.addEventListener('change', function () {
+                                    feeSlider.noUiSlider.set([Math.round(this.value), null]);
+                                });
+
+                                input1.addEventListener('change', function () {
+                                    feeSlider.noUiSlider.set([null, Math.round(this.value)]);
+                                });
+
+
+
+
+                            });
+
+                        </script>
+
+                        <script src="~/Content/js/nouislider.js"></script>
+
+                    }
+
+
+
+
+
+                }
+            </div>
+        </div>
+        <div class="col-md-7">
+
+            <h3>Results</h3>
+
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <nav class="navbar navbar-inverse" style="background-color: #efefef; border: none;">
+
+                <!--
+                &nbsp;&nbsp;
+                <span class="" style="color: #9e9e9e;">sort by: </span>&nbsp;&nbsp;
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @style = "color: #039be5;" })
+                <span class="" style="color: #9e9e9e;">&nbsp;|&nbsp;</span>
+                @Html.ActionLink("Fee", "Index", new { sortOrder = ViewBag.FeeSortParm, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @style = "color: #039be5;" })
+                  <input id="dbzSSearch" type="text" name="search" placeholder="New Search..">
+                     -->
+                <div class="container-fluid">
+                    @*<span class="" style="color: #9e9e9e;">&nbsp;&nbsp;New Search:&nbsp;</span>
+                    <input id="dbzSSearch" type="text" name="search" placeholder="Search..">*@
+                    &nbsp;&nbsp;
+                    <span class="" style="color: #9e9e9e;">sort by: </span>
+                    &nbsp;&nbsp;
+                    @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @style = "color: #039be5;" })
+                    <span class="" style="color: #9e9e9e;">&nbsp;|&nbsp;</span>
+                    @Html.ActionLink("Fee", "Index", new { sortOrder = ViewBag.FeeSortParm, currentFilter = ViewBag.CurrentFilter }, htmlAttributes: new { @style = "color: #039be5;" })
+                </div>
+            </nav>
+
+            @foreach (var item in Model)
+            {
+            <div class="eachDoc">
+                <hr style="border-top: 3px solid #ee6e73;" />
+                <article class="search-result">
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <a href="@Url.Action("Details", new { id = item.ID })" class="thumbnail"><img src="~/Content/images/medicine.gif" alt="Lorem ipsum"></a>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <h6>
+                            @Html.ActionLink(item.Name, "Details", new { id = item.ID })
+                        </h6>
+
+                        <p class=""> @Html.DisplayFor(modelItem => item.Speciality), @Html.DisplayFor(modelItem => item.Hospital)</p>
+                        
+                        <p><i class="fa fa-map-marker" aria-hidden="true"></i> <span> @Html.DisplayFor(modelItem => item.Location)</span></p>
+                        <p><i class="fa fa-money" aria-hidden="true"></i> TK <span class="TAKKA">@Html.DisplayFor(modelItem => item.Fee)</span></p>
+
+
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <ul class="meta-search list-inline">
+                            @{
+                                string[] parts = item.AppTime.Split(',');
+                            }
+                            @foreach (var ds in parts)
+                            {
+                                <li>
+                                    <input type="checkbox" id="@item.ID-@ds" class="@ds.ToLower()" checked="checked" onclick="return false;" />
+                                    <label class="weekDay" for="@item.ID-@ds">@ds</label>
+                                </li>
+                            }
+
+                            @*<li>@Html.ActionLink("Edit", "Edit", new { id = item.ID })</li>*@
+                                @*<li>@Html.ActionLink("Details", "Details", new { id = item.ID })</li>*@
+                                @*<li>@Html.ActionLink("Delete", "Delete", new { id = item.ID })</li>*@
+                            @*<li><i class="fa fa-thumbs-up" aria-hidden="true"></i> <span> 93%</span></li>
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span> @Html.DisplayFor(modelItem => item.Location)</span></li>
+                                <li><i class="fa fa-money" aria-hidden="true"></i> TK <span class="TAKKA">@Html.DisplayFor(modelItem => item.Fee)</span></li>*@
+                            @*<li>
+                                    <i class="glyphicon glyphicon-time"></i> <span>
+                                        @Html.DisplayFor(modelItem => item.AppTime)
+                                    </span>
+                                </li>*@
+                        </ul>
+                        <a href="@Url.Action("Book", new { id = item.ID })" class="btn-small waves-effect waves-light btn"><i class="fa fa-plus" aria-hidden="true"></i> Make Appointment </a>
+                    </div>
+                    <span class="clearfix borda"></span>
+                </article>
+            </div>
+                                }
+
+<div class="row">
+    <br />
+    <div class="col-sm-4 col-sm-offset-4">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+
+</div>
+
+
+</div>
+<div class="col-md-2 col-md-offset-1">
+    <hr />
+    <div id="affixApp" data-spy="affix" data-offset-top="200">
+        @*<div class="col-sm-12 text-center" style="border: 2px solid aquamarine;">
+                <img class="img-responsive" src="~/images/Ad.png">
+            </div>*@
+        Android: <a href="#!">
+            <img class="img-responsive" src="~/Content/images/google-play-badge.png">
+        </a>
+        IOS: <a href="#!">
+            <img class="img-responsive" src="~/Content/images/play-store-icons.png">
+        </a>
+        <hr />
+
+
+        <ul class="list-inline">
+            <li><a class="" href="#!"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a></li>
+            <li><a class="" href="#!"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a></li>
+            <li><a class="" href="#!"><i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+</div>

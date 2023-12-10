@@ -1,0 +1,297 @@
+﻿.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #3b99d9;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #3b99d9;
+    background-color: #f6f6f6;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #3b99d9;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #383838;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #000;
+}
+
+.navbar-inverse {
+    background-color: #fff;
+    border-color: #3b99d9;
+}
+
+    .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+        background-color: #3b99d9;
+    }
+
+        .navbar-inverse .navbar-toggle:hover .icon-bar, .navbar-inverse .navbar-toggle:focus .icon-bar {
+            background-color: #fff;
+        }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #9e9e9e;
+    }
+
+
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+    color: #3b99d9;
+    font-size: 25px;
+}
+
+    .navbar > .container .navbar-brand:hover, .navbar > .container-fluid .navbar-brand:hover {
+        color: #3b99d9;
+        font-size: 28px;
+    }
+
+.btn, .btn-large {
+    background-color: #3b99d9;
+}
+
+@media only screen and (min-width: 768px) {
+    .navbar-inverse .navbar-right > li:last-child a {
+        color: #fff;
+        border-radius: 3px;
+        width: 83px;
+        height: 56px;
+    }
+
+        .navbar-inverse .navbar-right > li:last-child a:hover,
+        .navbar-inverse .navbar-right > li:last-child a:focus {
+            color: #000;
+            border-radius: 3px;
+            width: 83px;
+            height: 56px;
+        }
+}
+
+@media only screen and (max-width: 767.99999px) {
+    .navbar-inverse .navbar-right > li:last-child a {
+        color: #fff;
+        border-radius: 3px;
+        width: 100%;
+        height: 56px;
+    }
+
+        .navbar-inverse .navbar-right > li:last-child a:hover,
+        .navbar-inverse .navbar-right > li:last-child a:focus {
+            color: #000;
+            border-radius: 3px;
+            width: 100%;
+            height: 56px;
+        }
+}
+
+input[type=text]:not([id=autocomplete-input]):focus,
+input:not([type]).form-control:focus,
+input[type=text].form-control:focus,
+input[type=password].form-control:focus,
+input[type=email].form-control:focus,
+input[type=url].form-control:focus,
+input[type=time].form-control:focus,
+input[type=date].form-control:focus,
+input[type=datetime].form-control:focus,
+input[type=datetime-local].form-control:focus,
+input[type=tel].form-control:focus,
+input[type=number].form-control:focus,
+input[type=search].form-control:focus,
+textarea.materialize-textarea:focus {
+    border-bottom: 1.5px solid #3b99d9 !important;
+}
+
+input[type=text]#autocomplete-input.autocomplete {
+    border-bottom: 1px solid #3b99d9;
+}
+
+
+
+input[type=text]#autocomplete-input.autocomplete {
+    max-width: inherit;
+}
+
+/*input#Email.form-control:focus{
+    border-bottom: 1.5px solid #3b99d9;
+}*/
+
+.btn:hover, .btn-large:hover, .btn-default:hover {
+    color: #3b99d9;
+    background-color: #fff;
+    border: 1px solid #3b99d9;
+    border-radius: 3px;
+}
+
+footer.page-footer {
+    background-color: transparent;
+}
+
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.page-wrap {
+    min-height: 100%;
+    /* equal to footer height */
+    margin-bottom: -60px;
+}
+
+    .page-wrap:after {
+        content: "";
+        display: block;
+    }
+
+    .site-footer, .page-wrap:after {
+        height: 60px;
+    }
+
+.site-footer {
+    background: orange;
+}
+
+.order-medicine {
+    width: 144%;
+    position: relative;
+    right: 22%;
+}
+
+@media only screen and (max-width: 993px) {
+    .order-medicine {
+        width: 118%;
+        position: relative;
+        right: 9%;
+    }
+}
+
+.input-field .select-wrapper span.caret {
+    display: none;
+}
+
+.select-wrapper i.drop-caret {
+    color: initial;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 10px;
+    margin: auto 0;
+    line-height: 10px;
+    margin-left: -12px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 395px) {
+    .select-wrapper i.drop-caret {
+        display: none;
+    }
+}
+
+.btn i, .btn-large i, .btn-floating i, .btn-large i, .btn-flat i {
+    font-size: inherit;
+}
+
+.btn:focus, .btn-default:focus, .btn-large:focus, .btn-floating:focus {
+    color: aquamarine;
+    background-color: #3b99d9;
+}
+
+/*.Fixed
+{
+    position: fixed;
+    top: 20px;
+}*/
+
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #3b99d9;
+}
+
+.collection a.collection-item {
+    color: #3b99d9;
+}
+
+    .collection a.collection-item:hover {
+        color: #3b99d9;
+    }
+
+@media only screen and (max-width: 735px) {
+    .cats {
+        width: 100% !important;
+    }
+}
+
+.autocomplete-content li .highlight {
+    color: #ee6e73;
+    text-decoration: underline;
+}
+
+.autocomplete-suggestions {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.autocomplete-suggestion {
+    line-height: 22px;
+    position: relative;
+    padding: 14px 16px;
+    line-height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    color: #3b99d9;
+}
+
+    .autocomplete-suggestion b {
+        color: #ee6e73;
+        text-decoration: underline;
+    }
+
+
+@media only screen and (max-width: 495px) and (min-width: 380px) {
+    div#loading.preloader-wrapper.small {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        left: 80%;
+        top: 34%;
+    }
+}
+
+@media only screen and (max-width: 379px) {
+    div#loading.preloader-wrapper.small {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        left: 77%;
+        top: 39%;
+    }
+}
+
+
+.preloader-wrapper.small {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 49%;
+    top: 33%;
+}
+
+.spinner-red, .spinner-red-only {
+    border-color: #ee6e73;
+}
+
+.required{
+    color: red;
+}
+
+@media only screen and (max-width: 991px) {
+    .recom {
+        margin-top: 16px !important;
+    }
+}
+

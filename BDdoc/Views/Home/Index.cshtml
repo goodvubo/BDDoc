@@ -1,0 +1,226 @@
+﻿@model IEnumerable<BDdoc.Models.Doctor>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section Styles {
+
+    <style>
+        .input-field input[type=text]#autocomplete-input.autocomplete:focus {
+            border-bottom: 1.5px solid #ee6e73;
+            box-shadow: 0 1px 0 0 #ee6e73;
+        }
+
+        input[type=text]:focus:not([readonly]) + label {
+            color: #ee6e73;
+        }
+
+        .sho {
+            display: block;
+        }
+
+        .hde {
+            display: none;
+        }
+    </style>
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            &nbsp;
+        </div>
+        <div class="col s12">
+            &nbsp;
+        </div>
+        <div class="col s12">
+            &nbsp;
+        </div>
+        <div class="col s12">
+            &nbsp;
+        </div>
+        <div class="col s12 text-center">
+            <h4 class="">Search Specifically</h4>
+        </div>
+        @section scripts {
+            <script src="~/Content/js/jquery.auto-complete.min.js"></script>
+
+            <script>
+    $(function () {
+        $("#ss").hide();
+        //$('#autocomplete-input').autoComplete({
+        //    minChars: 0,
+        //    source: function (term, suggest) {
+        //        term = term.toLowerCase();
+        //        var choices = [["~", "Dentist", "~", "Dentist"], ["~", "Gynecologist / Obstetrician", "~", "Gynecologist / Obstetrician"], ["~", "Dermatologist", "~", "Dermatologist"], ["~", "Ear-Nose-Throat (ENT)", "~", "Ear-Nose-Throat (ENT)"], ["~", "Neurologist", "~", "Neurologist"]];
+        //        var suggestions = [];
+        //        for (i = 0; i < choices.length; i++)
+        //            if (~(choices[i][0] + ' ' + choices[i][1]).toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+        //        suggest(suggestions);
+        //    },
+        //    renderItem: function (item, search) {
+        //        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        //        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+        //        return '<div class="autocomplete-suggestion default-sug" data-langname="' + item[1] + '" data-lang="' + item[3] + '" data-val="' + search + '">' + item[1] + '</div>';
+
+        //    },
+        //    onSelect: function (e, term, item) {
+        //        console.log('Item "' + item.data('langname') + ' (' + item.data('lang') + ')" selected by ' + (e.type == 'keydown' ? 'pressing enter or tab' : 'mouse click') + '.');
+        //        $('#autocomplete-input').val(item.data('langname'));
+        //    }
+        //});
+
+
+
+            var xhr;
+            $('#autocomplete-input').autoComplete({
+                minChars: 1,
+                source: function (term, response) {
+                    try { xhr.abort(); } catch (e) { }
+                    var customer = new Array();
+                        xhr = $.ajax({
+                            url: "/Home/Index",
+                            cache: false,
+                            type: "POST",
+                            dataType: "json",
+                            data: { "SearchString": term },
+                            beforeSend: function(){
+                                if($("#autocomplete-input").is(":focus")){
+                                    if ($("#autocomplete-input").val()) {
+                                        $("#loading").addClass("active");
+                                        $("#ss").show();
+                                    }
+                                }
+                            },
+                            complete: function () {
+                                $("#loading").removeClass("active")
+                            },
+                            success: function (data) {
+                                response(data[5]);
+                            }
+                        });
+                },
+                renderItem: function (item, search) {
+                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                        return '<div class="autocomplete-suggestion" data-langname="' + item[1] + '" data-lang="' + item[3] + '" data-val="' + search + '">' + item[1].replace(re, "<b>$1</b>") + '</div>';
+
+                },
+                onSelect: function(e, term, item){
+                    console.log('Item "'+item.data('langname')+' ('+item.data('lang')+')" selected by '+(e.type == 'keydown' ? 'pressing enter or tab' : 'mouse click')+'.');
+                    $('#autocomplete-input').val(item.data('langname'));
+                }
+            });
+
+        });
+            </script>
+        }
+
+        @using (Html.BeginForm("Index", "Doctors", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "", role = "form" }))
+        {
+            <div id="loading" class="preloader-wrapper small">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-field col s12">
+                @Html.TextBox("SearchString", null, new { @class = "autocomplete col s12", @type = "text", @id = "autocomplete-input" })
+                <label for="autocomplete-input"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Name, Specialities, Hospitals...</label>
+                <span id="ss" style="width: 100%;display: block;font-size: 10px;color: #4a4a4a;">
+                    Please wait for suggestions / Press ENTER to search
+                </span>
+            </div>
+        }
+
+        <div class="col s12">
+            &nbsp;
+        </div>
+        <div class="col s12 text-center">
+            <h4 class="">Browse Categories</h4>
+        </div>
+        <div class="col s12">
+            <blockquote class="col s12 m6 l3 cats">
+                <div class="collection">
+                    @Html.ActionLink("Gastroenterologist", "Index", "Doctors", new { id = "Gastroenterologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Ear-Nose-Throat (ENT)", "Index", "Doctors", new { id = "Ear-Nose-Throat (ENT)" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Gynecologist / Obstetrician", "Index", "Doctors", new { id = "Gynecologist / Obstetrician" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Neurologist", "Index", "Doctors", new { id = "Neurologist" }, new { @class = "collection-item" })
+                </div>
+            </blockquote>
+            <blockquote class="col s12 m6 l3 cats">
+                <div class="collection">
+                    @Html.ActionLink("Ophthalmologist", "Index", "Doctors", new { id = "Ophthalmologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Dermatologist", "Index", "Doctors", new { id = "Dermatologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Cardiologist", "Index", "Doctors", new { id = "Cardiologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Psychiatrist", "Index", "Doctors", new { id = "Psychiatrist" }, new { @class = "collection-item" })
+                </div>
+            </blockquote>
+            <blockquote class="col s12 m6 l3 cats">
+                <div class="collection">
+                    @Html.ActionLink("Urologist", "Index", "Doctors", new { id = "Urologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Dentist", "Index", "Doctors", new { id = "Dentist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Prosthodontist", "Index", "Doctors", new { id = "Prosthodontist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Orthodontist", "Index", "Doctors", new { id = "Orthodontist" }, new { @class = "collection-item" })
+                </div>
+            </blockquote>
+            <blockquote class="col s12 m6 l3 cats">
+                <div class="collection">
+                    @Html.ActionLink("Implantologist", "Index", "Doctors", new { id = "Implantologist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Acupuncturist", "Index", "Doctors", new { id = "Acupuncturist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Physiotherapist", "Index", "Doctors", new { id = "Physiotherapist" }, new { @class = "collection-item" })
+                    @Html.ActionLink("Dietitian / Nutritionist", "Index", "Doctors", new { id = "Dietitian / Nutritionist" }, new { @class = "collection-item" })
+                </div>
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="container">
+
+    <!-- <hr class="order-medicine" /> -->
+
+
+
+    <div class="row">
+        <div class="col l6 s12 m6">
+            <h4 class="">Order Medicines Online</h4>
+            <p class="grey-text" style="font-weight:bold;">Get medicines delivered to your doorstep!</p>
+            <br>
+            <br>
+            @Html.ActionLink("Order Now", "Index", "Medicines", null, new { @class = "btn btn-default" })
+        </div>
+        <div class="col l4 offset-l2 s12 m6">
+            <img src="~/Content/images/medicine.gif" alt="medicine" class="img-responsive" />
+        </div>
+    </div>
+
+</div>
+<hr />
+<div class="container">
+
+
+
+
+
+    <div class="row">
+        <div class="col l6 s12 m6">
+            <h4 class="">Home Sample Pickup</h4>
+            <p class="grey-text" style="font-weight:bold;">Get your sample picked up from your doorstep!</p>
+            <br>
+            <br>
+            @Html.ActionLink("Book Now", "Index", "Samples", null, new { @class = "btn btn-default" })
+        </div>
+        <div class="col l4 offset-l2 s12 m6">
+            <img src="~/Content/images/medDelivery.jpg" alt="medicine" class="img-responsive" />
+        </div>
+    </div>
+
+</div>

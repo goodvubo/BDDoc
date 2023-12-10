@@ -1,0 +1,164 @@
+﻿@model BDdoc.Models.Doctor
+@{
+    ViewBag.Title = "FeedBack";
+}
+
+@section Styles {
+    <style>
+        .recom {
+            color: #9e9e9e;
+            background: transparent;
+            width: 128px;
+            float: left;
+            padding: 34px 34px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 17px;
+            border: 1px solid #d6d6d6;
+            margin-left: 10px;
+            margin-top: 57px;
+            text-decoration: none;
+        }
+
+            .recom:hover {
+                color: #3b99d9;
+                border: 1px solid #3b99d9;
+                text-decoration: none;
+            }
+
+            .recom.seldy:hover {
+                color: white;
+            }
+
+        .seldy {
+            background-color: #3b99d9;
+            color: white;
+        }
+    </style>
+
+}
+<div class="container">
+
+
+
+    <div class="row">
+        <h3>This will take only a moment</h3>
+
+        <hr style="border-top: 3px solid #ee6e73;" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @*<a href="#" class="" style="color: lightseagreen;"><i class="fa fa-thumbs-up fa-lg prefix" aria-hidden="true"></i></a><a href="#" class="" style="color: orangered;"><i class="fa fa-thumbs-down fa-lg prefix" aria-hidden="true"></i></a>
+                <br />*@
+            <div class="input-field">
+                @*@Html.TextArea("", null, new { @class = "materialize-textarea", @id = "icon_prefix2", @style = "max-width: inherit;", @title = "Tips:", @data_toggle = "popover", @data_content = "Avoid abusive and / or promotional messages" })*@
+                <textarea id="comment" name="comment" class="materialize-textarea" style="max-width: inherit;" data-toggle="popover" title="Tips:" data-content="Avoid abusive and / or promotional messages"></textarea>
+                <label for="comment"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>&nbsp;Feedback Message</label>
+                @*@Html.TextBoxFo*@
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="input-field">
+                
+                @Html.TextBox("patient_Name", null, new { @class = "validate", @type = "text", @id = "name", required = "required", @style = "max-width: inherit;" })
+                @*<input id="name" type="text" class="validate" style="max-width: inherit;" required>*@
+                <label for="name"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Patient/Visitor Name<span class="required">*</span></label>
+            </div>
+            <div class="input-field">
+                @Html.TextBox("Reason", null, new { @class = "validate", @type = "text", @id = "reason", @style = "max-width: inherit;" })
+                @*<input id="email" type="text" class="validate" style="max-width: inherit;">*@
+                <label for="reason"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Reason</label>
+            </div>
+            <div class="input-field">
+                @Html.TextBox("patient_email", null, new { @class = "validate", @type = "email", @id = "email", @style = "max-width: inherit;" })
+                @*<input id="email" type="text" class="validate" style="max-width: inherit;">*@
+                <label for="email"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Email</label>
+            </div>
+            <div class="input-field">
+                @Html.TextBox("patient_Mobile", null, new { @class = "validate", @type = "tel", @id = "mobile", required = "required", @style = "max-width: inherit;" })
+                @*<input id="Mobile" type="text" class="validate" style="max-width: inherit;" required>*@
+                <label for="mobile"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Mobile<span class="required">*</span></label>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+            <ul class="list-inline" id="rater">
+                <li><div class="likez recom"> like <br /> <i class="glyphicon glyphicon-thumbs-up fa-2x" aria-hidden="true"></i></div></li>
+                <li><div class="dislikez recom"> dislike <br /> <i class="glyphicon glyphicon-thumbs-up fa-2x fa-rotate-180" aria-hidden="true"></i></div></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+
+
+        <div class="col-sm-12">
+            @Html.Hidden("Popularity")
+            @*<input id="qtyz" name="Popularity" type="number" hidden />*@
+            @*@Html.CheckBox("Anonymous", new { @class="filled-in", @id="Anonymous" })*@
+            <input id="Anonymous" class="filled-in" type="checkbox" />
+            <label for="Anonymous">Submit Anonymously</label>
+
+            <br />
+            <span style="width: 100%; display: block; font-size: 10px; color: #4a4a4a;">
+                By clicking submit you are agreeing to the <a href="#">Terms and Conditions</a>.
+            </span>
+            <button class="btn-small waves-effect waves-light btn" type="submit" >Submit</button>
+            @*<a href="@Url.Action("", new { id = Model.ID })" class="btn-small waves-effect waves-light btn"> Submit </a>*@
+            @*<a href="#" class="btn-small waves-effect waves-light btn"> Submit </a>*@
+        </div>
+    </div>
+
+}
+
+    </div>
+    <!--
+<div class="row">
+
+
+        <div class="col-sm-12">
+            <input id="qtyz" type="checkbox" checked hidden />
+            @*@Html.CheckBox("Anonymous", new { @class="filled-in", @id="Anonymous" })*@
+            <input id="Anonymous" class="filled-in" type="checkbox" />
+            <label for="Anonymous">Submit Anonymously</label>
+
+            <br />
+            <span style="width: 100%; display: block; font-size: 10px; color: #4a4a4a;">
+                By clicking submit you are agreeing to the <a href="#">Terms and Conditions</a>.
+            </span>
+            
+            @*<a href="#" class="btn-small waves-effect waves-light btn"> Submit </a>*@
+        </div>
+    </div>
+        -->
+    @section Scripts {
+
+        <script type="text/javascript">
+            $(function () {
+                $('[data-toggle="popover"]').popover({ placement: "top" });
+                //console.log($('#qtyz').is(':checked'));
+                $('#Popularity').val(1);
+
+                $(".likez").click(function () {
+                    $(this).addClass("seldy");
+                    $(".dislikez").removeClass("seldy");
+                    $('#Popularity').val("1");
+                    //console.log($('#qtyz').is(':checked'));
+                });
+
+                $(".dislikez").click(function () {
+                    $(this).addClass("seldy");
+                    $(".likez").removeClass("seldy");
+                    $('#Popularity').val("0");
+                    //console.log($('#qtyz').is(':checked'));
+                });
+
+            });
+        </script>
+
+    }
+
+
+</div>

@@ -1,0 +1,356 @@
+﻿@model IEnumerable<BDdoc.Models.Medicine>
+
+@{
+    ViewBag.Title = "Medicines";
+}
+
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Medicine_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.Order_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medicine_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Medicine_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.Order_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Medicine_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Medicine_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Medicine_ID })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+
+
+@section Styles {
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/nouislider.css" rel="stylesheet" type="text/css" />
+    <style>
+        .noUi-target .range-label {
+            background-color: #3b99d9;
+        }
+
+        .noUi-connect {
+            background-color: #76c8ff;
+        }
+
+        [type="checkbox"]:checked + label:before {
+            border-right: 2px solid #3b99d9 !important;
+            border-bottom: 2px solid #3b99d9 !important;
+        }
+
+        .form-group > label {
+            color: #ee6e73;
+        }
+
+        #affixFilter.affix {
+            padding: 15px;
+            background-color: #efefef;
+            top: 57px;
+            left: 15px;
+            width: 16.2%;
+        }
+
+        #affixApp.affix {
+            bottom: 50px;
+            right: 0px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" style="background-color: #efefef;">
+
+
+            <div id="affixFilter" data-spy="affix" data-offset-top="3">
+                <button id="hidd" class="" style="width: 100%; background-color: #2ab7a9; color: white;">&#9650;&nbsp;hide filters&nbsp;&#9650;</button>
+                @using (Html.BeginForm("Index", "Doctors", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "", @id = "forHid" }))
+                {
+
+                    <div class="row">
+
+                        @*<div class="input-field col s12 ">
+                                Genres:<select asp-for="movieGenre" asp-items="Model.genres">
+                                        <option value="" selected>All&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9660;</option>
+                                    </select>
+
+                            </div*@
+
+                        <br/>
+                        <div class="form-group col s12 ">
+                            <label><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Price:</label>
+                            <br /><br />
+                            <div id="fee-range">
+                            </div>
+                            <br />
+                            <input id="input0" readonly>
+                            <label>to</label>
+                            <input id="input1" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col s12 ">
+
+                    </div>
+
+                    @section scripts {
+
+
+                        <script type="text/javascript">
+                            $(function () {
+
+
+
+                                function fild() {
+                                    $(".eachDoc").each(function (index, Element) {
+                                        var sun = false;
+                                        var mon = false;
+                                        var tue = false;
+                                        var wed = false;
+                                        var thu = false;
+                                        var fri = false;
+                                        var sat = false;
+                                        if (($("#sun").is(':checked'))) {
+                                            if ($(this).find(".sun").length) {
+                                                sun = true;
+                                            }
+                                        }
+                                        if (($("#mon").is(':checked'))) {
+                                            if ($(this).find(".mon").length) {
+                                                mon = true;
+                                            }
+                                        }
+                                        if (($("#tue").is(':checked'))) {
+                                            if ($(this).find(".tue").length) {
+                                                tue = true;
+                                            }
+                                        }
+                                        if (($("#wed").is(':checked'))) {
+                                            if ($(this).find(".wed").length) {
+                                                wed = true;
+                                            }
+                                        }
+                                        if (($("#thu").is(':checked'))) {
+                                            if ($(this).find(".thu").length) {
+                                                thu = true;
+                                            }
+                                        }
+                                        if (($("#fri").is(':checked'))) {
+                                            if ($(this).find(".fri").length) {
+                                                fri = true;
+                                            }
+                                        }
+                                        if (($("#sat").is(':checked'))) {
+                                            if ($(this).find(".sat").length) {
+                                                sat = true;
+                                            }
+                                        }
+                                        if (sun || mon || tue || wed || thu || fri || sat) {
+                                            $(this).show(1000);
+                                        } else {
+                                            $(this).hide(1000);
+                                        }
+                                    });
+                                }
+
+                                $(".avblz").click(function () {
+                                    fild();
+                                });
+
+                                function filz(i0, i1) {
+                                    $(".eachDoc").each(function (index, Element) {
+                                        var numb = parseInt($(this).find(".TAKKA").text(), 10);
+                                        if (numb < i0 || numb > i1) {
+                                            $(this).hide(1000);
+                                        } else {
+                                            $(this).show(1000);
+                                        }
+                                    });
+                                }
+
+                                $("#hidd").click(function () {
+                                    $("#forHid").slideToggle();
+                                    if ($("#hidd").text() === "▲ hide filters ▲") {
+                                        $("#hidd").text("▼ show filters ▼");
+                                    } else {
+                                        $("#hidd").text("▲ hide filters ▲");
+                                    }
+                                });
+
+                                var feeSlider = document.getElementById('fee-range');
+
+                                noUiSlider.create(feeSlider, {
+                                    start: [0, 5000],
+                                    connect: true,
+                                    step: 1,
+                                    range: {
+                                        'min': 0,
+                                        'max': 5000
+                                    },
+                                    format: wNumb({
+                                        decimals: 0
+                                    })
+                                });
+
+                                var input0 = document.getElementById('input0');
+                                var input1 = document.getElementById('input1');
+
+                                var faultz0 = 0;
+                                var faultz1 = 5000;
+
+                                feeSlider.noUiSlider.on('update', function (values, handle) {
+
+                                    var value = values[handle];
+
+                                    if (handle) {
+                                        faultz1 = Math.round(value);
+                                        input1.value = faultz1 + " Tk";
+                                    } else {
+                                        faultz0 = Math.round(value);
+                                        input0.value = faultz0 + " Tk";
+                                    }
+                                    filz(faultz0, faultz1);
+
+                                });
+
+                                input0.addEventListener('change', function () {
+                                    feeSlider.noUiSlider.set([Math.round(this.value), null]);
+                                });
+
+                                input1.addEventListener('change', function () {
+                                    feeSlider.noUiSlider.set([null, Math.round(this.value)]);
+                                });
+
+
+
+
+                            });
+
+                        </script>
+
+                        <script src="~/Content/js/nouislider.js"></script>
+
+                    }
+
+
+
+
+
+                }
+            </div>
+        </div>
+        <div class="col-md-7">
+            
+            <nav class="navbar navbar-inverse" style="background-color: #efefef; border: none;">
+
+                
+                <div class="container-fluid">
+                    &nbsp;&nbsp;
+                    <span class="" style="color: #9e9e9e;">Search Medicines: </span>
+                    &nbsp;&nbsp;
+                    @Html.TextBox("SearchString", null, new { @placeholder = "Search..", @type = "text", @id = "dbzSSearch" })
+                </div>
+            </nav>
+            
+            
+
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+
+            <div class="" id="B">
+                <ul class="collection">
+                    @foreach (var item in Model)
+                    {
+                        <li class="collection-item avatar">
+                            <img src="~/Content/images/medicinesCAPS.gif" alt="" class="circle">
+                            <span class="title">@Html.DisplayFor(modelItem => item.Medicine_Name)</span>
+                            
+                            <p class="grey-text">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </p>
+                            <span style="width: 100%;display: block;font-size: 10px;color: #4a4a4a;">
+                                <a style="text-decoration: underline;">Prescription required</a>
+                            </span>
+                            
+                                <div class="secondary-content">
+                                    <p><i class="fa fa-money" aria-hidden="true"></i> TK <span class="TAKKA">@Html.DisplayFor(modelItem => item.Medicine_Price)</span></p>
+                                    <a href="@Url.Action("Book", new { id = item.Medicine_ID })" class="btn-small waves-effect waves-light btn"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart </a>
+                                </div>
+
+                        </li>
+                    }
+                </ul>
+            </div>
+
+
+
+
+
+
+        </div>
+        <div class="col-md-2 col-md-offset-1">
+            <div id="affixApp" data-spy="affix" data-offset-top="3">
+                <hr />
+                <h5><span class="fa fa-cart-plus" aria-hidden="true" style="color: #ee6e73;"></span><span class="new badge right" data-badge-caption="item(s)">1</span></h5>
+                <div class="collection">
+                    <a href="#!" class="collection-item">CheckOut<span class="fa fa-angle-double-right right" aria-hidden="true" style="font-size: 1.5em;"></span></a>
+                </div>
+                <hr />
+
+                Android: <a href="#!">
+                    <img class="img-responsive" src="@(Url.Content("~/Content/images/google-play-badge.png") + "?v=" + Guid.NewGuid().ToString())">
+                </a>
+                IOS: <a href="#!">
+                    <img class="img-responsive" src="@(Url.Content("~/Content/images/play-store-icons.png") + "?v=" + Guid.NewGuid().ToString())">
+                </a>
+                <hr />
+
+
+                <ul class="list-inline">
+                    <li><a class="" href="#!"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a></li>
+                    <li><a class="" href="#!"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a></li>
+                    <li><a class="" href="#!"><i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>

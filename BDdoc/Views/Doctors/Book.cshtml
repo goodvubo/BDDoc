@@ -1,0 +1,158 @@
+﻿@model BDdoc.Models.Doctor
+@{
+    ViewData["Title"] = "Make appointment";
+}
+@section Styles {
+    <link href="~/Content/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .datetimepicker-inline {
+            width: 100%;
+        }
+
+        th.today, th.switch {
+            border: 1px solid #d0d0d0;
+        }
+
+        #datetimepicker {
+            max-width: inherit;
+        }
+
+        .datetimepicker.datetimepicker-dropdown-bottom-right.dropdown-menu {
+            width: 68%;
+        }
+
+        .datetimepicker table tr td.disabled, .datetimepicker table tr td.disabled:hover {
+            color: #ee6e73;
+        }
+
+        .input-field input[type=text]:focus {
+            border-bottom: 1.5px solid #03a9f4;
+            box-shadow: 0 1px 0 0 #03a9f4;
+        }
+
+        input[type=text]:focus:not([readonly]) + label {
+            color: #03a9f4;
+        }
+    </style>
+
+}
+<div class="container">
+
+
+
+    <div class="row">
+        <h3>Make an appointment</h3>
+        @*<hr style="border-top: 3px solid #ee6e73;" />
+    <article class="search-result">
+
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <a href="#" class="thumbnail"><img src="~/Content/images/medicine.gif" alt=""></a>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 excerpet">
+            <h5>@Html.DisplayFor(model => model.Name)</h5>
+
+            <p class=""><b>Speciality: </b>@Html.DisplayFor(model => model.Name)</p>
+
+
+            <p class=""><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i> <span> 93%</span></p>
+
+            <p class="" style="color: #00c700;"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i><span> Medical Registration Verified</span></p>
+
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <ul class="meta-search">
+                <li class=""><a href="#" class="btn-small waves-effect waves-light btn"><i class="fa fa-comments-o" aria-hidden="true"></i> Give Feedback </a></li>
+                <li>&nbsp;</li>
+                <li class=""><a href="#" class="btn-small waves-effect waves-light btn"><i class="fa fa-plus" aria-hidden="true"></i> Make Appointment </a></li>
+            </ul>
+        </div>
+
+        <span class="clearfix borda"></span>
+    </article>*@
+        <hr style="border-top: 3px solid #ee6e73;" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+            <div class="input-field">
+                @Html.TextBox("Time", null, new { @class = "", @type = "text", @id = "datetimepicker", autofocus = "autofocus", required = "required", @readonly = "readonly", @style = "color: black;" })
+                <span id="nAvail" class="new badge red" data-badge-caption="not available" style="position: relative; bottom: 50px;"></span>
+                <span id="yAvail" class="new badge green" data-badge-caption="available" style="position: relative; bottom: 50px;"></span>
+                <label for="datetimepicker" style="color: #9e9e9e;"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Choose Date & Time<span class="required">*</span></label>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="input-field">
+                    @Html.TextBox("Patient_Name", null, new { @class = "validate", @type = "text", @id = "name", required = "required", @style = "max-width: inherit;" })
+                    @*<input id="name" type="text" class="validate" style="max-width: inherit;" required>*@
+                    <label for="name"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Patient/Visitor Name<span class="required">*</span></label>
+                </div>
+                <div class="input-field">
+                    @Html.TextBox("Email", null, new { @class = "validate", @type = "email", @id = "email", required = "required", @style = "max-width: inherit;" })
+                    @*<input id="email" type="text" class="validate" style="max-width: inherit;" required>*@
+                    <label for="email"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Email<span class="required">*</span></label>
+                </div>
+                <div class="input-field">
+                    @Html.TextBox("Phone", null, new { @class = "validate", @type = "tel", @id = "Mobile", required = "required", @style = "max-width: inherit;" })
+                    @*<input id="Mobile" type="text" class="validate" style="max-width: inherit;" required>*@
+                    <label for="Mobile"><i class="fa fa-caret-right fa-lg" aria-hidden="true"></i>&nbsp;Mobile<span class="required">*</span></label>
+                </div>
+                <button class="btn-small waves-effect waves-light btn" type="submit">Submit</button>
+                @*<a href="#" class="btn-small waves-effect waves-light btn"> Submit </a>*@
+            </div>
+
+}
+
+    </div>
+    @section Scripts {
+        @*<script src="~/Content/js/moment.min.js"></script>*@
+        <script src="~/Content/js/bootstrap-datetimepicker.min.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+
+                $("#nAvail").hide();
+                $("#yAvail").hide();
+
+                $("#datetimepicker").change( function (event) {
+                    $.ajax({
+                        url: "@Url.Action("Availability", "Doctors")",
+                        data: { apptm : $(this).val() , id : @ViewData["id"] },
+                        cache: false,
+                        type: "POST",
+                        dataType: "text",
+
+                        success: function (data) {
+                            if (data == "0") {
+                                $("#nAvail").show();
+                                $("#yAvail").hide();
+                            }
+                            if (data == "1") {
+                                $("#nAvail").hide();
+                                $("#yAvail").show();
+                            }
+                        }
+                    });
+                });
+
+                $('#datetimepicker').datetimepicker({
+                    format: "dd/mm/yyyy - HH:ii P",
+                    showMeridian: true,
+                    todayBtn: true,
+                    daysOfWeekDisabled: [0, 6],
+                    todayHighlight: true,
+                    minuteStep: 30,
+                    autoclose: true
+                });
+                $("i.icon-remove").toggleClass("fa fa-times fa-lg");
+                $("i.icon-th").toggleClass("fa fa-calendar fa-lg");
+                $("i.glyphicon.icon-arrow-right").toggleClass("fa fa-arrow-right fa-lg");
+                $("i.glyphicon.icon-arrow-left").toggleClass("fa fa-arrow-left fa-lg");
+            });
+        </script>
+
+    }
+
+
+</div>
+
